@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Proof Document</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f6f6f6; }
+    .box { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 8px; }
+    button { padding: 12px 20px; background: #4B7BEC; border: none; color: white; cursor: pointer; border-radius: 5px; }
+    input { margin-top: 15px; }
+    #result { margin-top: 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Upload Proof of Income</h2>
+  <input type="file" id="fileInput">
+  <button onclick="upload()">Upload</button>
+
+  <div id="result"></div>
+</div>
+
+<script>
+async function upload() {
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) {
+        alert("Please choose a file first.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("https://<YOUR-NGROK>/upload-proof", {
+        method: "POST",
+        body: formData
+    });
+
+    const json = await res.json();
+    document.getElementById("result").innerHTML =
+        "Uploaded! File URL: <br><br><a href='" + json.file_url + "' target='_blank'>" + json.file_url + "</a>";
+}
+</script>
+
+</body>
+</html>
