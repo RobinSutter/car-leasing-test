@@ -368,10 +368,8 @@
             return;
           }
 
-          status.textContent = "Upload successful! Copy this URL into Camunda:";
+          status.textContent = "Upload successful!";
           status.className = "status success";
-          urlText.textContent = data.file_url;
-          urlBox.style.display = "block";
         } catch (err) {
           console.error(err);
           status.textContent = "Unexpected error: " + err.message;
